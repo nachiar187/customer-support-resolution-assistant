@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Customer Support Assistant</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; background: #f4f4f9; }
+        .card { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); max-width: 600px; margin: auto; }
+        input, textarea, button { width: 100%; margin-top: 10px; padding: 10px; box-sizing: border-box; }
+        button { background: #007bff; color: white; border: none; font-weight: bold; cursor: pointer; }
+        #output { margin-top: 20px; white-space: pre-wrap; background: #eee; padding: 10px; border-radius: 4px; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h2>Customer Support Resolution Assistant</h2>
+        <label>Account ID:</label>
+        <input type="text" id="accountId" value="CUST-101">
+        
+        <label>Customer Message:</label>
+        <textarea id="message" rows="4">My internet is running very slow today.</textarea>
+        
+        <button onclick="resolveTicket()">Submit Ticket</button>
+        
+        <div id="output">Response will appear here...</div>
+    </div>
+
+    <script>
+        async function resolveTicket() {
+            const accountId = document.getElementById('accountId').value;
+            const message = document.getElementById('message').value;
+            const output = document.getElementById('output');
+            output.innerText = "Processing with Gemini...";
+
+            try {
+                const res = await fetch('/api/resolve', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ account_id: accountId, message: message })
+                });
+                const data = await res.json();
+                output.innerText = JSON.stringify(data, null, 2);
+            } catch (e) {
+                output.innerText = "Error connecting to server.";
+            }
+        }
+    </script>
+</body>
+</html>

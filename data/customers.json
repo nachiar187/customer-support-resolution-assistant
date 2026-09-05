@@ -1,0 +1,9 @@
+[
+  {
+    "account_id": "CUST-101",
+    "name": "Arun Kumar",
+    "plan": "Fiber 300Mbps",
+    "billing_status": "Paid",
+    "recent_tickets": []
+  }
+]
